@@ -1,0 +1,45 @@
+# Scientific Method
+
+## Factual relationship versus policy violation
+
+A detector emits a `FactualFinding`: an observed, provenance-backed factual relationship between records or files without a policy result. A factual relationship becomes an `EvaluatedFinding` and may be called a confirmed disallowed overlap only after policy evaluation under an explicit `SplitPolicy`.
+
+## Confirmed identifier relationships
+
+Confirmed patient, specimen, or slide relationships must come from explicit identifiers or validated deterministic parsing rules. They must preserve source fields, normalization steps, and record identifiers.
+
+## Byte-content equality
+
+Byte-content equality is an exact relationship established by deterministic byte hashing of file content. It should be represented separately from identifier relationships and image-derived relationships.
+
+## Canonical pixel-content equality
+
+Canonical pixel-content equality is an exact relationship established after deterministic image decoding and canonicalization. It is distinct from byte equality because different files can encode identical pixels.
+
+## Perceptual similarity candidates
+
+Perceptual hashes may identify review items. Similarity candidates must not be treated as confirmed patient, specimen, slide, or institution identity. They should remain review items unless later confirmed by independent deterministic evidence.
+
+## Institution provenance warnings
+
+Shared institution provenance can be important context. Under the default milestone-one policy it is a warning dimension rather than a disallowed overlap by itself.
+
+## Metadata conflicts
+
+Conflicting metadata should be reported with the source fields and records involved. Conflicts are review items unless deterministic rules establish a confirmed relationship or policy violation.
+
+## Deterministic evidence requirements
+
+Every factual relationship must retain evidence provenance: detector name, source records, source fields or files, normalized values where relevant, and deterministic comparison method. At ingestion, original bytes are hashed before parsing, raw headers and zero-based source row provenance are retained, and manifest digests must not be recomputed from decoded text. Scientific evidence must not be invented or inferred from GPT output.
+
+## Ingestion normalization boundaries
+
+Manifest ingestion uses conservative normalization only. Headers are normalized deterministically for stable keys, but malformed headers, exact duplicate headers, and normalized header collisions are rejected rather than guessed. Cell cleanup trims surrounding whitespace, applies Unicode NFKC, and maps only approved missing-value tokens to missing values. Arbitrary labels and image paths are not casefolded, and semantic aliasing is outside this stage. Identifier-like comparison normalization is available only as an explicit helper for later schema-aware stages.
+
+## Repair-proposal limitations
+
+Repair outputs are proposals requiring researcher review. They should explain what policy objective they attempt to satisfy and preserve the evidence that motivated each proposed change.
+
+## Non-clinical scope
+
+SlideLineage is limited to dataset provenance and partition validity. It must not make diagnosis, prognosis, treatment advice, biological interpretation, or clinical claims.
