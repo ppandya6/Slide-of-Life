@@ -69,3 +69,11 @@ Task 5 adds canonical record collection contracts for later reports. `CanonicalM
 `RepairComponent` records deterministic component IDs derived from sorted record IDs and finding IDs, member record IDs, confirming finding IDs, original partition counts, label counts, optional proposed partition, and conflict status. `RepairDecision` records the proposed partition, moved records, reason, ratio deviation, label-distribution deviation, and deterministic tie-break explanation.
 
 `RepairProposal` is generated only as a proposal requiring researcher review. It records the policy profile, included and excluded relationship types, components, decisions, unresolved conflicts, deterministic tradeoffs, and metrics such as original/proposed/target train fractions, moved-record count, component count, largest component size, and before/after label distributions. Report file writers remain pending.
+
+## Task 8 operational artifacts
+
+Task 8 writes `report.json`, `report.html`, and `findings.csv` for every completed audit. It writes `repair_proposal.csv` only when repair is requested. JSON uses UTF-8, two-space indentation, sorted keys, model validation before writing, and a trailing newline. Findings CSV contains one deterministic row per evaluated finding with policy outcome, policy rule, policy reason, repair eligibility, evidence count, and canonical compact metrics JSON.
+
+The repair proposal CSV contains one deterministic row per canonical record with original/proposed partition, component ID, moved flag, label, confirming finding IDs, and the required researcher-review proposal statement. No repair CSV is created when repair is absent.
+
+The standalone HTML report contains scope notices, overview counts, input provenance, schema mappings, findings, text-only image evidence, relationship graph summary, optional repair details, and reproducibility metadata. It is designed for local viewing without remote JavaScript, fonts, stylesheets, analytics, or images.

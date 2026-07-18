@@ -88,3 +88,7 @@ Future stages must keep policy evaluation separate from factual detectors, avoid
 ## Task 7 graph, policy, and repair constraints
 
 Future stages must preserve the separation between factual detector output and policy-evaluated findings, including policy profile names, policy rules, and deterministic policy reasons. Similarity candidates must remain outside deterministic repair. Every repair output must be labeled as a proposed partition requiring researcher review, preserve every input record exactly once, and expose tradeoffs rather than hiding ratio, label, institution-grouping, image-similarity, or input-quality limitations.
+
+## Task 8 audit CLI and reporting constraints
+
+Future reporting work must write policy-violation reports before returning exit code 2, avoid raw-row leakage, preserve HTML autoescaping, preserve output-directory safety, retain deterministic artifact ordering, and keep any future AI-generated content separate from deterministic findings and policy outcomes.

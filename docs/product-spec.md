@@ -10,7 +10,7 @@ Pathology datasets can contain related samples across partitions through shared 
 
 ## Milestone-one scope
 
-Milestone one now includes the repository foundation, typed domain models, deterministic configuration contracts, the default `SplitPolicy` profile, deterministic CSV manifest ingestion contracts with source provenance, deterministic semantic schema mapping, canonical record construction, stable record IDs, strict TCGA parsing, and lineage conflict reporting. Schema mapping includes explicit YAML/JSON maps, direct semantic-column overrides, per-field confidence/source metadata, ranked alternatives, unresolved ambiguity, and pair-level train/test consistency checks. Record construction includes explicit source IDs, content-derived fingerprint IDs, duplicate-row suffixes, raw and normalized digests, direct-versus-derived lineage reconciliation, and partition warnings. It implements deterministic factual identifier overlap detection, image path auditing, byte and canonical-pixel fingerprinting, exact image duplicate facts, perceptual image-similarity candidates, and typed input-quality findings. It implements deterministic relationship graph materialization, explicit SplitPolicy evaluation, evaluated findings, and deterministic repair proposal contracts. It does not implement reporting writers, an operational audit CLI, demos, or GPT integration.
+Milestone one now includes the repository foundation, typed domain models, deterministic configuration contracts, the default `SplitPolicy` profile, deterministic CSV manifest ingestion contracts with source provenance, deterministic semantic schema mapping, canonical record construction, stable record IDs, strict TCGA parsing, and lineage conflict reporting. Schema mapping includes explicit YAML/JSON maps, direct semantic-column overrides, per-field confidence/source metadata, ranked alternatives, unresolved ambiguity, and pair-level train/test consistency checks. Record construction includes explicit source IDs, content-derived fingerprint IDs, duplicate-row suffixes, raw and normalized digests, direct-versus-derived lineage reconciliation, and partition warnings. It implements deterministic factual identifier overlap detection, image path auditing, byte and canonical-pixel fingerprinting, exact image duplicate facts, perceptual image-similarity candidates, and typed input-quality findings. It implements deterministic relationship graph materialization, explicit SplitPolicy evaluation, evaluated findings, deterministic repair proposal contracts, reporting writers, and the operational audit CLI. It does not implement demos or GPT integration.
 
 ## Standard audit workflow
 
@@ -23,7 +23,7 @@ The planned workflow is:
 5. Build a deterministic relationship graph that materializes factual evidence.
 6. Convert `FactualFinding` records into `EvaluatedFinding` records by evaluating them under a `SplitPolicy`.
 7. Optionally create deterministic repair proposals requiring researcher review.
-8. Emit machine-readable and human-readable reports in a later task.
+8. Emit machine-readable and human-readable reports.
 
 ## Optional repair workflow
 
@@ -60,8 +60,8 @@ Potential submission enhancements include polished HTML reports, reproducibility
 
 ## Deferred research capabilities
 
-Deferred capabilities include broader institutional provenance modeling, advanced image similarity review queues, report writing, an operational audit CLI, and optional GPT-5.6 assistance for redacted schema interpretation.
+Deferred capabilities include broader institutional provenance modeling, advanced image similarity review queues, demo fixtures, and optional GPT-5.6 assistance for redacted schema interpretation.
 
 ## Success criteria
 
-Success means users can install the package, run documented developer checks, inspect accurate milestone documentation, invoke `slidelineage --help` and `slidelineage --version`, load two CSV manifests into deterministic typed ingestion contracts, produce typed deterministic schema mappings, construct canonical records, run factual detectors, materialize relationship graphs, evaluate findings under `SplitPolicy`, and generate deterministic repair proposals. Report writing and the audit command remain pending.
+Success means users can install the package, run documented developer checks, inspect accurate milestone documentation, invoke `slidelineage --help` and `slidelineage --version`, load two CSV manifests into deterministic typed ingestion contracts, produce typed deterministic schema mappings, construct canonical records, run factual detectors, materialize relationship graphs, evaluate findings under `SplitPolicy`, and generate deterministic repair proposals. Demo fixtures and GPT integration remain pending.

@@ -20,6 +20,12 @@ class Partition(StrEnum):
     test = "test"
 
 
+class AuditStatus(StrEnum):
+    passed = "passed"
+    policy_violations = "policy_violations"
+    failed = "failed"
+
+
 class PolicyOutcome(StrEnum):
     violation = "violation"
     allowed_overlap = "allowed_overlap"
@@ -782,6 +788,8 @@ class InputSummary(ContractModel):
     manifests: tuple[SourceManifest, ...] = ()
     image_root: Path | None = None
     total_records: int = Field(default=0, ge=0)
+    train_records: int = Field(default=0, ge=0)
+    test_records: int = Field(default=0, ge=0)
 
 
 class FindingSummary(ContractModel):
@@ -789,6 +797,7 @@ class FindingSummary(ContractModel):
     evaluated_finding_count: int = Field(default=0, ge=0)
     review_item_count: int = Field(default=0, ge=0)
     violation_count: int = Field(default=0, ge=0)
+    metrics: dict[str, MetricValue] = Field(default_factory=dict)
 
 
 class PolicyEvaluationSummary(ContractModel):
@@ -840,7 +849,14 @@ class PolicyEvaluationResult(PolicyEvaluationSummary):
 class ReproducibilityMetadata(ContractModel):
     config_digest: str
     python_version: str
+    slidelineage_version: str | None = None
     dependency_versions: dict[str, str] = Field(default_factory=dict)
+    manifest_sha256: dict[str, str] = Field(default_factory=dict)
+    parser_versions: tuple[str, ...] = ()
+    detector_versions: tuple[str, ...] = ()
+    image_thresholds: dict[str, int] = Field(default_factory=dict)
+    policy_profile: str | None = None
+    report_schema_version: str = "1.0.0"
 
     @field_validator("config_digest", "python_version")
     @classmethod
@@ -977,6 +993,22 @@ class FactualDetectionResult(ContractModel):
         return self
 
 
+class AuditArtifactPaths(ContractModel):
+    output_dir: Path
+    report_json: Path
+    report_html: Path
+    findings_csv: Path
+    repair_proposal_csv: Path | None = None
+
+
+class AuditRunResult(ContractModel):
+    report: "AuditReport"
+    artifacts: AuditArtifactPaths | None = None
+    exit_code: int = Field(ge=0)
+    terminal_summary: str
+    warnings: tuple[str, ...] = ()
+
+
 class AuditReport(ContractModel):
     schema_version: Literal["1.0.0"] = "1.0.0"
     tool: ToolMetadata
@@ -985,7 +1017,10 @@ class AuditReport(ContractModel):
     configuration: AuditConfig
     policy: SplitPolicy
     schema_mapping: SchemaMapping | None = None
+    schema_mappings: dict[str, object] | None = None
+    status: AuditStatus = AuditStatus.passed
     summary: FindingSummary
+    canonical_records: tuple[CanonicalRecord, ...] = ()
     factual_findings: tuple[FactualFinding, ...] = ()
     evaluated_findings: tuple[EvaluatedFinding, ...] = ()
     relationship_graph: RelationshipGraph

@@ -155,3 +155,23 @@ class InvalidTargetFractionError(RepairError):
 
 class RepairAssignmentError(RepairError):
     """Raised when repair components cannot be assigned consistently."""
+
+
+class AuditExecutionError(SlideLineageError):
+    """Raised when deterministic audit orchestration fails."""
+
+
+class OutputDirectoryError(AuditExecutionError):
+    """Raised when an audit output directory is unsafe to use."""
+
+
+class ArtifactWriteError(AuditExecutionError):
+    """Raised when report artifact writing fails."""
+
+
+class ReportSerializationError(ArtifactWriteError):
+    """Raised when report serialization fails validation."""
+
+
+class ReportTemplateError(ArtifactWriteError):
+    """Raised when HTML report rendering fails."""

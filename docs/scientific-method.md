@@ -92,3 +92,13 @@ Repair eligibility is narrower than policy violation status. Only exact or confi
 Repair components are indivisible connected components over eligible relationships plus singleton components for unlinked records. The greedy assignment sorts components by descending size, descending cross-partition eligible-finding count, then smallest record ID. For each component, assignment candidates are compared lexicographically by absolute target train-count deviation, aggregate label-distribution deviation when labels are complete, moved-record count, then a deterministic train-before-test tie-break. Missing labels skip the label objective and are reported as a tradeoff.
 
 Every repair output is a proposed partition requiring researcher review. Proposals preserve every input record exactly once, disclose impossible exact target fractions, oversized components, material label differences, institution grouping choices, similarity-candidate exclusion, and input-quality limitations without claiming scientific correctness or publication readiness.
+
+## Task 8 deterministic audit orchestration and reports
+
+The operational audit sequence is: validate configuration, prepare the output directory, load train/test manifests, map schemas, construct canonical records, run factual detectors, materialize the relationship graph, load the requested `SplitPolicy`, evaluate factual findings, optionally propose repair, construct a typed report, write artifacts, print a terminal summary, and return the policy exit code.
+
+Reports preserve evidence boundaries. JSON, CSV, and HTML artifacts include factual detector output and policy-evaluated findings without raw manifest rows, image bytes, API keys, or clinical interpretation. Report writers rely on stable model serialization, deterministic ordering supplied by pipeline stages, compact canonical JSON for CSV metrics, and atomic sibling-file replacement where practical.
+
+Exit code `0` means the audit completed without policy violations. Exit code `2` means the audit completed with policy violations and artifacts are still written. Exit code `1` is reserved for input, configuration, execution, or artifact-writing failures.
+
+The HTML report is standalone and text-oriented for image evidence in this milestone. It uses autoescaping, embeds CSS locally, avoids remote assets, and defers thumbnail embedding to later work. The repair CSV remains a proposed partition output requiring researcher review and must not be treated as an automatic correction.
