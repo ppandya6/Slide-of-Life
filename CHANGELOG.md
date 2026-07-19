@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0a1 - Unreleased
+## 0.1.0a1 - 2026-07-19
 
 First packaged preview: deterministic partition auditing; schema mapping;
 canonical records and provenance; factual overlap and image detectors; explicit
